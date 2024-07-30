@@ -22,7 +22,7 @@ namespace {mod_class_name}
         // Change this to your translation language
         public static readonly LocaleIdentifier ModLanguage = new LocaleIdentifier(SystemLanguage.English);
         // Uncomment this if using custom fonts
-        // public static {mod_class_name} Mod;
+        // public static {mod_class_name} Mod { get;  internal set; }
 
         public {mod_class_name}(string modDirectory) : base(modDirectory)
         {
