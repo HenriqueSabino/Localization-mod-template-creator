@@ -1,0 +1,74 @@
+﻿using Deadpan.Enums.Engine.Components.Modding;
+using UnityEngine.Localization;
+using UnityEngine;
+using UnityEngine.Localization.Settings;
+using HarmonyLib;
+using System.IO;
+using TMPro;
+
+namespace {mod_class_name}
+{
+    public class {mod_class_name} : WildfrostMod
+    {
+        // Change this to your translation language
+        public static readonly LocaleIdentifier ModLanguage = new LocaleIdentifier(SystemLanguage.English);
+        // Uncomment this if using custom fonts
+        // public static {mod_class_name} Mod;
+
+        public {mod_class_name}(string modDirectory) : base(modDirectory)
+        {
+            // Uncomment this if using custom fonts
+            // Mod = this;
+        }
+
+        public override string GUID => "{mod_guid}";
+
+        public override string[] Depends => new string[] { };
+
+        public override string Title => "{mod_title}";
+
+        public override string Description => "{mod_description}";
+
+        // Uncomment this if using custom fonts
+        // [HarmonyPatch(typeof(FontSetterSystem), "LocaleChanged")]
+        // internal static class FontSetterSystemPatch
+        // {
+        //     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "Used by reflection.")]
+        //     private static void Postfix(Locale locale)
+        //     {
+        //         //IL_0042: Unknown result type (might be due to invalid IL or missing references)
+        //         //IL_004c: Expected O, but got Unknown
+        //         if (locale.Identifier == ModLanguage)
+        //         {
+        //             var newFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(Mod.ModDirectory, "<custom font name>.ttf")));
+
+        //             FontSetterSystem.current = newFont;
+        //             FontSetterSystem.UpdateFontSetters();
+        //         }
+        //     }
+        // }
+
+        // Change to public if using Publicized dll
+        protected override void Load()
+        {
+            base.Load();
+
+            Events.OnGameStart += SetCurrentLocale;
+
+            LocalizationHelper.TryAddLocale(ModLanguage);
+            
+            {localization_methods_calls}
+        }
+
+        private void SetCurrentLocale()
+        {
+            Locale locale = LocalizationHelper.TryAddLocale(ModLanguage);
+            if (LocalizationSettings.SelectedLocale != null && Settings.Load("Language", "") == locale.Identifier)
+            {
+                LocalizationSettings.SelectedLocale = locale;
+            }
+        }
+
+        {localization_methods}
+    }
+}
