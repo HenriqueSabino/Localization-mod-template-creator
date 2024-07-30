@@ -2,18 +2,14 @@
 using UnityEngine.Localization;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
-using HarmonyLib;
 using System.IO;
 // Uncomment this if using custom fonts
 // using TMPro;
 
 // To use custom fonts on your mod you'll also need the following dlls referenced:
-// Unity.TextMeshPro.dll
-// UnityEngine.TextCoreFontEngineModule.dll
 // Assembly-CSharp-Publicized.dll (Publicized version not the original)
 // UnityEngine.TextRenderingModule.dll
-// UnityEngine.TextCoreTextEngineModule.dll
-// UnityEngine.CoreModule.dll
+// Unity.TextMeshPro.dll
 
 namespace {mod_class_name}
 {
@@ -38,31 +34,14 @@ namespace {mod_class_name}
 
         public override string Description => "{mod_description}";
 
-        // Uncomment this if using custom fonts
-        // [HarmonyPatch(typeof(FontSetterSystem), "LocaleChanged")]
-        // internal static class FontSetterSystemPatch
-        // {
-        //     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "Used by reflection.")]
-        //     private static void Postfix(Locale locale)
-        //     {
-        //         //IL_0042: Unknown result type (might be due to invalid IL or missing references)
-        //         //IL_004c: Expected O, but got Unknown
-        //         if (locale.Identifier == ModLanguage)
-        //         {
-        //             var newFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(Mod.ModDirectory, "<custom font name>.ttf")));
-
-        //             FontSetterSystem.current = newFont;
-        //             FontSetterSystem.UpdateFontSetters();
-        //         }
-        //     }
-        // }
-
         // Change to public if using Publicized dll
         protected override void Load()
         {
             base.Load();
 
             Events.OnGameStart += SetCurrentLocale;
+            // Uncomment this if using custom fonts
+            // LocalizationSettings.SelectedLocaleChanged += ChangeGameFont;
 
             LocalizationHelper.TryAddLocale(ModLanguage);
             
@@ -77,6 +56,19 @@ namespace {mod_class_name}
                 LocalizationSettings.SelectedLocale = locale;
             }
         }
+
+        // Uncomment this if using custom fonts
+        // [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "Used by reflection.")]
+        // private static void ChangeGameFont(Locale locale)
+        // {
+        //     if (locale.Identifier == ModLanguage)
+        //     {
+        //         var newFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(Mod.ModDirectory, "<custom font name>.ttf")));
+
+        //         FontSetterSystem.current = newFont;
+        //         FontSetterSystem.UpdateFontSetters();
+        //     }
+        // }
 
         {localization_methods}
     }
