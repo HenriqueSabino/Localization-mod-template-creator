@@ -4,7 +4,16 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using HarmonyLib;
 using System.IO;
-using TMPro;
+// Uncomment this if using custom fonts
+// using TMPro;
+
+// To use custom fonts on your mod you'll also need the following dlls referenced:
+// Unity.TextMeshPro.dll
+// UnityEngine.TextCoreFontEngineModule.dll
+// Assembly-CSharp-Publicized.dll (Publicized version not the original)
+// UnityEngine.TextRenderingModule.dll
+// UnityEngine.TextCoreTextEngineModule.dll
+// UnityEngine.CoreModule.dll
 
 namespace {mod_class_name}
 {
