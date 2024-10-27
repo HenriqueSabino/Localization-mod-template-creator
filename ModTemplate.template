@@ -48,6 +48,16 @@ namespace {mod_class_name}
             {localization_methods_calls}
         }
 
+        // Change to public if using Publicized dll
+        protected override void Unload()
+        {
+            Events.OnGameStart -= SetCurrentLocale;
+            // Uncomment this if using custom fonts
+            // LocalizationSettings.SelectedLocaleChanged -= ChangeGameFont;
+            
+            base.Unload();
+        }
+
         private void SetCurrentLocale()
         {
             Locale locale = LocalizationHelper.TryAddLocale(ModLanguage);
@@ -57,7 +67,7 @@ namespace {mod_class_name}
             }
         }
 
-        // Uncomment this if using custom fonts
+        // Uncomment this if using custom fonts (Unless it is a modified version of the default font)
         // [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "Used by reflection.")]
         // private static void ChangeGameFont(Locale locale)
         // {
@@ -69,6 +79,35 @@ namespace {mod_class_name}
         //         FontSetterSystem.UpdateFontSetters();
         //     }
         // }
+       
+        // Uncomment this if using a modified version of the default game fonts
+        //private static void ChangeGameFont(Locale locale)
+        //{
+        //    if (locale.Identifier != ModLanguage)
+        //    {
+        //        return;
+        //    }
+
+        //    var newFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(Mod.ModDirectory, "Clink-Regular-Diacritics.ttf")));
+        //    var fontSetter = Object.FindObjectOfType<FontSetterSystem>();
+
+        //    TMP_FontAsset originalFont;
+        //    if (fontSetter.defaultFontRef.IsValid())
+        //    {
+        //        originalFont = (TMP_FontAsset)fontSetter.defaultFontRef.OperationHandle.WaitForCompletion();
+        //    }
+        //    else
+        //    {
+        //        originalFont = fontSetter.defaultFontRef.LoadAssetAsync().WaitForCompletion();
+        //    }
+
+        //    newFont.faceInfo = originalFont.faceInfo;
+
+        //    fontSetter.defaultFontRef.ReleaseAsset();
+
+        //    FontSetterSystem.current = newFont;
+        //    FontSetterSystem.UpdateFontSetters();
+        //}
 
         {localization_methods}
     }

@@ -1,0 +1,32 @@
+using HarmonyLib;
+
+namespace {mod_class_name}.Patches
+{
+    [HarmonyPatch(typeof(LocalizationHelper), "GetCollection")]
+    internal static class ChineseCollectionPatch
+    {
+        [HarmonyPrefix]
+        public static bool GetCollection(ref StringTable __result, string name, LocaleIdentifier identifier)
+        {
+            string code = "";
+
+            switch (identifier.Code)
+            {
+                case "zh-hans": 
+                    code = "zh-Hans"; 
+                    break;
+                case "zh-hant":
+                    code = "zh-Hant";
+                    break;
+                default: 
+                    code = identifier.Code;
+                    break;
+            }
+
+            string text = name + "_" + code;
+
+            __result = Addressables.LoadAssetAsync<StringTable>(text).WaitForCompletion();
+            return !__result;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+// Uncomment this file if you need to change the icon sizes to match your font size
+
+//using HarmonyLib;
+//using TMPro;
+//using UnityEngine.Localization.Settings;
+//using UnityEngine.TextCore;
+
+//namespace {mod_class_name}.Patches
+//{
+//    [HarmonyPatch(typeof(Glyph), nameof(Glyph.scale), MethodType.Getter)]
+//    internal static class SpriteGlyphPatch
+//    {
+//        private static float defaultValue = float.NegativeInfinity;
+
+//        static void Postfix(Glyph __instance, ref float __result)
+//        {
+//            if (!(__instance is TMP_SpriteGlyph))
+//            {
+//                return;
+//            }
+
+//            if (defaultValue == float.NegativeInfinity)
+//            {
+//                defaultValue = __result;
+//            }
+
+//            if (LocalizationSettings.SelectedLocale.Identifier == {mod_class_name}.{mod_class_name}.ModLanguage)
+//            {
+//                __instance.scale = 1.5f;
+//                __result = 1.5f;
+//            }
+//            else
+//            {
+//                // default value
+//                __instance.scale = defaultValue;
+//                __result = defaultValue;
+//            }
+//        }
+//    }
+//}
